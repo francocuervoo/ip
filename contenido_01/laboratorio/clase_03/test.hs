@@ -102,3 +102,18 @@ sacarUnidades x | x >= 0 = x `div` 10
 
 digitoDecenas :: Int -> Int
 digitoDecenas x = digitoUnidades(sacarUnidades(x))
+
+
+-- Ejercicio 4
+--b 
+{-
+    Especificación
+    problema todoMenor( t1, t2 : RxR ) : Bool {
+        requiere: { True }
+        asegura: { res = true <-> la componente de cada tupla es menor a la segunda}
+    }
+-}
+
+todoMenor :: (Float, Float) -> (Float, Float) -> Bool
+--todoMenor t1 t2 = fst t1 < fst t2 && snd t1 < snd t2
+todoMenor (a,b) (c,d) = a < c && b < d

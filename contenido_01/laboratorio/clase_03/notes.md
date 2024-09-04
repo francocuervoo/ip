@@ -19,3 +19,5 @@ Requiere = { True } quiere decir que no requiere nada
 not ó !=
 
 div -> da la división entera. por ejemplo: div 10 3 = 3 (no 3,333)
+
+para tuplas -> fst y snd
