@@ -457,8 +457,8 @@ def transponer (m : list[list[int]]) -> list[list[int]] :
 #print(transponer(matriz))
         
 # 6)
-def quien_gana_tateti (m: list[list[chr]]) -> int :
-    columnas : list[list[chr]] = []
+def quien_gana_tateti (m: list[list[str]]) -> int :
+    columnas : list[list[str]] = []
     res: int = 0
     
     i : int = 0
@@ -594,5 +594,146 @@ def elevar_matriz_a_potencia(d: int, p: int) -> list[list[int]]:
     return resultado
             
             
-print(elevar_matriz_a_potencia(5,5))    
+#print(elevar_matriz_a_potencia(5,5))    
 
+
+# ------------------------------------------------------------------------------------------------------
+
+# Ejercicio 4 Programas interactivos usando secuencias
+
+# 1)
+def agregar_alumnos() -> list[str]:
+    lista_alumnos : list[str] = []
+    nombre_alumno = input("Ingrese nombre del alumno: ") 
+
+    while nombre_alumno != "" and nombre_alumno != "listo":
+        lista_alumnos.append(nombre_alumno)    
+        nombre_alumno = input("Ingrese nuevo nombre de alumno o 'listo' para terminar: ")
+    return lista_alumnos
+        
+#print("Lista de alumnos", agregar_alumnos())
+
+# 2)
+def historial_monedero() -> list[tuple[str, int]]:
+    total : int = 0
+    historial : list[tuple[str, int]] = []
+    operacion = input("Selecciona una operación: C -> Cargar créditos, D -> Descontar créditos, X -> Terminar ")
+       
+    while operacion != "X":      
+        while operacion == "C":
+            credito = int(input("Ingrese un crédito a cargar "))
+            historial.append((operacion, credito))
+            total += credito
+            operacion = input("Selecciona una nueva operación: C -> Cargar créditos, D -> Descontar créditos, X -> Terminar ")
+            
+        while operacion == "D":
+            credito = int(input("Ingrese un crédito a descontar "))
+            historial.append((operacion, ( -credito)))
+            total -= credito
+            operacion = input("Selecciona una nueva operación: C -> Cargar créditos, D -> Descontar créditos, X -> Terminar ")
+    
+    return historial         
+                
+#print("El historial es :", historial_monedero())    
+    
+    
+# 3)
+def jugar_siete_y_medio() -> list[int] :
+    total : float = 0.0
+    historial : list[int] = []
+    numero_random = obtener_numero_random_juego()
+    historial.append(numero_random)
+    total += devolver_puntos_juego(numero_random)
+    
+    print("Juego empezado")
+    operacion = input("Ingrese 1 para sacar otra carta, o 2 para plantarse: ")  
+    
+    while operacion == "1" and total <= 7.5:
+        numero_random = obtener_numero_random_juego()
+        historial.append(numero_random)
+        total += devolver_puntos_juego(numero_random)
+        
+        if total > 7.5:
+            print("Has periddo ")
+            return historial
+        
+        operacion = input("Ingrese 1 para sacar otra carta, o 2 para plantarse: ")
+            
+    if operacion == "2":
+        print("Te has plantado ")
+        
+        return historial        
+            
+def obtener_numero_random_juego() -> int:
+    numero_random = random.randint(1,12)
+    
+    while numero_random == 8 or numero_random == 9:
+        numero_random = random.randint(1,12)
+        
+    return numero_random
+    
+
+def devolver_puntos_juego(numero : int) -> float:
+    res : int = 0
+    if numero == 10 or numero == 11 or numero == 12:
+        res = 0.5
+    else:
+        res = numero
+    return res
+
+#print(jugar_siete_y_medio())
+
+# 4)
+def analizar_password () -> str:
+    password_ingresada = input("Ingrese una contraseña a analizar ")
+    
+    if es_longitud_menor_5(password_ingresada):
+        return "ROJA"
+    
+    if es_longitud_mayor_ocho(password_ingresada) and tiene_mayuscula(password_ingresada) and tiene_minuscula(password_ingresada) and tiene_digito_numero(password_ingresada):
+        return "VERDE"
+    
+    return "AMARILLA"
+
+def es_longitud_mayor_ocho (password: str) -> bool:
+    if len(password) > 8:
+        return True
+    return False
+
+def es_longitud_menor_5 (password: str) -> bool:
+    if len(password) < 5:
+        return True
+    return False
+
+def tiene_digito_numero (password : str) -> bool:
+    numeros : list[str] = ["0","1","2","3","4","5","6","7","8","9"]
+    
+    for char in password:
+        if(esta_inlcuido(char, numeros)):
+            return True
+    return False
+
+def esta_inlcuido (e: T, s: list[T]) -> bool :            
+    for elem in s:
+        if elem == e:
+            return True
+    return False
+
+def tiene_mayuscula (password : str) -> bool:
+    mayusculas : list[str] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T","U", "V", "W", "X", "Y", "Z"]
+
+    for char in password:
+        if(esta_inlcuido(char, mayusculas)):
+            return True
+    return False
+
+def tiene_minuscula (password : str) -> bool:
+    minusculas : list[str] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+    for char in password:
+        if(esta_inlcuido(char, minusculas)):
+            return True
+    return False
+
+
+print("Análisis de contrasea ", analizar_password())
