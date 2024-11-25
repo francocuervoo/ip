@@ -1,9 +1,10 @@
 import random
+import typing
 
 from queue import LifoQueue as Pila
 from queue import Queue as Cola
 
-from typing import TypeVar
+from typing import TypeVar , TextIO
 T = TypeVar('T')
 
 # PILAS
@@ -518,7 +519,7 @@ def obtener_palabras_del_archivo (nombre_archivo : str) -> list[str]:
 
     for element in contenido:
         
-        if element != " ":
+        if element != " " and element != "\n":
             palabra_parcial += element
             
         else : 
@@ -720,24 +721,75 @@ def calcular_valor_intervalo ( inventario : dict[str, dict[str, float | int]]) -
                 
     return total                
                 
-print(calcular_valor_intervalo(inventario))                
+#print(calcular_valor_intervalo(inventario))                
                 
 
 # ------------------------------------------------------------------------------------------------------
 
 # ARCHIVOS
-# EJERCICIO 21
+# EJERCICIO 3
+
+# 21)
 
 # 1)
-def contar_lineas (nombre_archivo:str) -> int:
+def contar_lineas (nombre_archivo : str) -> int:
     archivo = open(nombre_archivo, 'r', encoding='utf-8')
-    
-    lineas = archivo.readlines()
-    cantidad_lineas = len(lineas)
+    lineas = archivo.readlines()    
     archivo.close()
     
-    return cantidad_lineas
+    return len(lineas)
+
+#print(contar_lineas('file-test.txt'))
+
+#2)
+def existe_palabra ( palabra : str, nombre_archivo: str) -> bool:
+    palabras_del_archivo = obtener_palabras_del_archivo(nombre_archivo)
+    
+    print("palabras del archivo", palabras_del_archivo)
+
+    for element in palabras_del_archivo:
+        if palabra == element:
+            return True
+        
+    return False
+
+#print(existe_palabra('Pythonn', 'file-test.txt'))   
+
+#3)
+def cantidad_apariciones (nombre_archivo : str, palabra: str) -> int:
+    apariciones : int = 0
+    palabras_del_archivo = obtener_palabras_del_archivo(nombre_archivo)
+
+    for elem in palabras_del_archivo:
+        if palabra == elem:
+            apariciones += 1
+            
+    return apariciones            
+
+#print(cantidad_apariciones('file-test.txt', 'ejemplo'))
 
 
-# EJERCICIO 22
-# LA FUNCIÓN AUXILIAR TIENE QUE VERIFICAR QUE DESPUÉS DE LOS ESPACIOS HAYA UN #
+# 22)
+def clonar_sin_comentarios (nombre_archivo : str) -> None:
+    archivo : TextIO = open(nombre_archivo, 'r')
+    arch_clonado: typing.IO = open("clonado.txt", "w")
+    lineas : list[str] = archivo.readlines() 
+    archivo.close()
+    
+    lineas_sin_comentarios : list[str] = []
+       
+    for linea in lineas: 
+        for caracter in linea:
+            if caracter != "#":
+                lineas_sin_comentarios.append(linea)
+            break
+                         
+                         
+    for linea_sin_comentario in lineas_sin_comentarios:
+        arch_clonado.write(linea_sin_comentario) 
+                
+    arch_clonado.close()                
+        
+    
+clonar_sin_comentarios('file-test.txt')
+
