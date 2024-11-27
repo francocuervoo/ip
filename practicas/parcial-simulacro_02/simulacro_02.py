@@ -120,10 +120,12 @@ def obtener_columnas_matriz(matriz: list[list[int]]) -> list[list[int]]:
 
     matriz_columnas : list[list[int]] = []
     columna_parcial : list[int] = []
-    largo_matriz : int = len(matriz)
     
+    alto_matriz : int = len(matriz)
+    largo_matriz : int = len(matriz[0])
+                
     for i in range(largo_matriz):
-        for j in range(largo_matriz):
+        for j in range(alto_matriz):
             columna_parcial.append(matriz[j][i])        
         
         matriz_columnas.append(columna_parcial)
@@ -140,4 +142,12 @@ def obtener_minimo_fila (fila: list[int]) -> int:
 
     return minimo_numero_fila
 
+matriz_test = [
+    [1,2,3,4,5],
+    [1,2,3,4,5],
+    [3,2,3,4,5],
+    [1,2,3,4,5],
+    [1,2,3,4,5]
+]
 
+#print(matriz_pseudo_ordenada(matriz_test))
